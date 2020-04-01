@@ -1,5 +1,5 @@
 {
-  "name": "react-native-cached-image",
+  "name": "@getapper/react-native-cached-image",
   "version": "1.4.3",
   "description": "CachedImage component for react-native",
   "main": "index.js",
