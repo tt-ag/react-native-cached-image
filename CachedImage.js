@@ -64,6 +64,7 @@ class CachedImage extends React.Component {
     constructor(props) {
         super(props);
         this._isMounted = false;
+        this._unsubscribe = null;
         this.state = {
             isCacheable: true,
             cachedImagePath: null,
@@ -80,7 +81,7 @@ class CachedImage extends React.Component {
 
     componentWillMount() {
         this._isMounted = true;
-        NetInfo.addEventListener(this.handleConnectivityChange);
+        this._unsubscribe = NetInfo.addEventListener(this.handleConnectivityChange);
         // initial
         NetInfo.fetch()
           .then(state => {
@@ -94,7 +95,9 @@ class CachedImage extends React.Component {
 
     componentWillUnmount() {
         this._isMounted = false;
-        NetInfo.removeEventListener(this.handleConnectivityChange);
+        if (this._unsubscribe) {
+            this._unsubscribe();
+        }
     }
 
     componentWillReceiveProps(nextProps) {
